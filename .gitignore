@@ -1,0 +1,8 @@
+# Ignore Python and Django-related files
+__pycache__/
+db.sqlite3
+*.pyc
+*.pyo
+*.log
+.env
+staticfiles/

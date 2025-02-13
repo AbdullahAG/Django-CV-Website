@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }} - CV</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 800px;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section h2 {
+            margin-bottom: 10px;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-size: 14px;
+            padding: 5px 10px;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+        }
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+        }
+        .entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+        .date {
+            font-style: italic;
+            color: #555;
+            min-width: 150px;
+            text-align: right;
+			font-size: 14px;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>{{ name }}</h1>
+
+    <!-- Compact Contact Information -->
+    <div class="section contact-info">
+        <span>Email: <a href="mailto:{{ email }}">{{ email }}</a></span>
+        <span>Phone: {{ phone }}</span>
+        <span>GitHub: <a href="https://github.com/{{ github }}" target="_blank">{{ github }}</a></span>
+        <span>LinkedIn: <a href="https://linkedin.com/in/{{ linkedin }}" target="_blank">{{ linkedin }}</a></span>
+    </div>
+
+    <div class="section">
+        <h2>Technical Skills</h2>
+        <p><strong>Languages:</strong> {{ skills.languages|join:", " }}</p>
+        <p><strong>Tools & Frameworks:</strong> {{ skills.tools|join:", " }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Professional Experience</h2>
+        {% for job in experience %}
+            <div class="entry">
+                <div>
+                    <p><strong>{{ job.title }} - {{ job.organization }}</strong></p>
+                    <ul>
+                        {% for task in job.tasks %}
+                            <li>{{ task }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="date">{{ job.dates }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        {% for degree in education %}
+            <div class="entry">
+                <div>
+                    <p><strong>{{ degree.degree }}</strong> - {{ degree.institution }}</p>
+                </div>
+                <div class="date">
+                    <p>{{ degree.graduation }}{% if degree.gpa %} | {{ degree.gpa }}{% endif %}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Projects</h2>
+        {% for project in projects %}
+            <div class="entry">
+                <div>
+                    <p><strong>{{ project.title }}</strong> - {{ project.organization }}</p>
+                    <p>{{ project.details }}</p>
+                </div>
+                <div class="date">{{ project.dates }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Certifications</h2>
+        {% for cert in certifications %}
+            <div class="entry">
+                <p>{{ cert.name }}</p>
+                <div class="date">{{ cert.date }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Publications</h2>
+        {% for pub in publications %}
+            <div class="entry">
+                <p><a href="{{ pub.link }}" target="_blank">{{ pub.title }}</a></p>
+                <div class="date">{{ pub.date }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
